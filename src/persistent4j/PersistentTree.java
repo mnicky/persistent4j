@@ -1,9 +1,10 @@
 package persistent4j;
 
+import persistent4j.IPersistentTree;
 import java.util.Comparator;
 
 /** Persistent implementation of unbalanced binary search tree. */
-public final class PersistentTree {
+public final class PersistentTree implements IPersistentTree {
 
     //**************** FIELDS **********************************************//
 

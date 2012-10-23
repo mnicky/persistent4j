@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="persistent4j" default="jar" basedir=".">
+
+<!-- properties -->
+
+  <property name="project.version" value="0.1.0-SNAPSHOT"/>
+
+  <property name="src.dir" value="src"/>
+  <property name="test.dir" value="test"/>
+
+  <property name="resources.dir" value="resources"/>
+  <property name="build.dir" value="target"/>
+  <property name="classes.dir" value="${build.dir}${file.separator}classes"/>
+
+  <property name="project.jar" value="${build.dir}${file.separator}${ant.project.name}-${project.version}.jar"/>
+
+  <property name="javadoc.dir" value="${build.dir}${file.separator}javadoc"/>
+  <property name="javadoc.j2seapi" value="http://download.oracle.com/javase/6/docs/api/"/>
+
+<!-- pseudo targets for conditions -->
+
+  <target name="create-gitignore" unless="gitignore.exists">
+    <echo file=".gitignore" message="target/${line.separator}"/>
+  </target>
+
+  <target name="create-readme" unless="readme.exists">
+    <echo file="README.md" message="# ${ant.project.name}${line.separator}${line.separator}A Java library designed to ... well, that part is up to you.${line.separator}${line.separator}## Usage${line.separator}${line.separator}FIXME${line.separator}${line.separator}## License${line.separator}${line.separator}Copyright © 2012 FIXME${line.separator}${line.separator}Distributed under the MIT License.${line.separator}"/>
+  </target>
+
+<!-- targets -->
+
+  <target name="init" description="Create basic project structure">
+    <echo level="info" message="Creating basic project structure in ${basedir}${file.separator}..."/>
+    <mkdir dir="${src.dir}${file.separator}${ant.project.name}"/>
+    <mkdir dir="${test.dir}${file.separator}${ant.project.name}"/>
+    <mkdir dir="${resources.dir}"/>
+    <available file=".gitignore" property="gitignore.exists"/>
+    <available file="README.md" property="readme.exists"/>
+    <antcall target="create-gitignore"></antcall>
+    <antcall target="create-readme"></antcall>
+    <echo level="info" message="Done."/>
+  </target>
+
+  <target name="clean" description="Delete all generated files">
+    <echo level="info" message="Deleting directory ${basedir}${file.separator}${build.dir}..."/>
+    <delete includeemptydirs="true" quiet="true">
+      <fileset dir="${build.dir}"/>
+      <fileset dir="${javadoc.dir}"/>
+    </delete>
+    <echo level="info" message="Done."/>
+  </target>
+
+  <target name="compile" description="Compile the project">
+    <echo level="info" message="Compiling classes to ${basedir}${file.separator}${classes.dir}..."/>
+    <mkdir dir="${classes.dir}"/>
+    <copy failonerror="false" todir="${classes.dir}" includeemptydirs="true">
+      <fileset dir="${resources.dir}"/>
+    </copy>
+    <javac fork="true" srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+    <echo level="info" message="Done."/>
+  </target>
+
+  <target name="compile-tests" description="Compile the project tests">
+    <echo level="info" message="Compiling tests to ${basedir}${file.separator}${classes.dir}..."/>
+    <mkdir dir="${classes.dir}"/>
+    <javac fork="true" debug="true" srcdir="${test.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+    <echo level="info" message="Done."/>
+  </target>
+
+  <target name="test" depends="clean, compile, compile-tests" description="Run the tests">
+    <echo level="info" message="Running tests:"></echo>
+    <apply force="true" relative="true" failonerror="true" type="file" addsourcefile="false" executable="java" dir="${classes.dir}" >
+      <arg value="-ea"/>
+      <targetfile/>
+      <fileset dir="${classes.dir}" includes="**/*_Test.class"/>
+      <packagemapper handledirsep="true" from="*.class" to="*"/>
+    </apply>
+    <echo level="info" message="Done."></echo>
+  </target>
+
+  <target name="jar" depends="clean, compile" description="Generate the JAR">
+    <echo level="info" message="JAR file ${basedir}${file.separator}${project.jar} built successfully."/>
+    <delete file="${project.jar}" quiet="true"/>
+    <jar destfile="${project.jar}">
+      <fileset dir="${classes.dir}"/>
+      <manifest>
+        <attribute name="Implementation-Title" value="${ant.project.name}"/>
+        <attribute name="Implementation-Version" value="${project.version}"/>
+      </manifest>
+    </jar>
+    <echo level="info" message="Done."/>
+  </target>
+
+  <target name="javadoc" description="Generate Javadoc documentation">
+    <echo level="info" message="Generating javadoc in ${basedir}${file.separator}${javadoc.dir}..."/>
+    <delete includeemptydirs="true" quiet="true">
+      <fileset dir="${javadoc.dir}"/>
+    </delete>
+    <mkdir dir="${javadoc.dir}"/>
+    <javadoc destdir="${javadoc.dir}" encoding="utf-8" author="true" version="true" use="true" windowtitle="${ant.project.name} ${project.version}">
+      <packageset dir="${src.dir}" defaultexcludes="yes">
+        <include name="**"/>
+      </packageset>
+      <link href="${javadoc.j2seapi}"/>
+    </javadoc>
+    <echo level="info" message="Done."/>
+  </target>
+
+
+</project>
