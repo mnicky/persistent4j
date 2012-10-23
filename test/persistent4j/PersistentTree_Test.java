@@ -4,10 +4,6 @@ import persistent4j.PersistentTree;
 
 public final class PersistentTree_Test {
 
-
-    //**************** MAIN METHOD *****************************************//
-
-    // just for testing
     public static void main(String args[]) {
 
         // checking if assertions are enabled
@@ -20,7 +16,7 @@ public final class PersistentTree_Test {
             //-------------------- isEmpty() -----------------------------------//
 
             // empty tree
-            assert new PersistentTree().isEmpty() == false;
+            assert new PersistentTree().isEmpty() == true;
 
             // non-empty tree
             assert new PersistentTree().add(0).isEmpty() == false;
