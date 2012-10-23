@@ -12,6 +12,9 @@
   <property name="build.dir" value="target"/>
   <property name="classes.dir" value="${build.dir}${file.separator}classes"/>
 
+  <property name="gitignore.file" value=".gitignore"/>
+  <property name="readme.file" value="README.md"/>
+
   <property name="project.jar" value="${build.dir}${file.separator}${ant.project.name}-${project.version}.jar"/>
 
   <property name="javadoc.dir" value="${build.dir}${file.separator}javadoc"/>
@@ -20,11 +23,14 @@
 <!-- pseudo targets for conditions -->
 
   <target name="create-gitignore" unless="gitignore.exists">
-    <echo file=".gitignore" message="target/${line.separator}"/>
+    <echo file="${gitignore.file}" message="target/${line.separator}"/>
   </target>
 
   <target name="create-readme" unless="readme.exists">
-    <echo file="README.md" message="# ${ant.project.name}${line.separator}${line.separator}A Java library designed to ... well, that part is up to you.${line.separator}${line.separator}## Usage${line.separator}${line.separator}FIXME${line.separator}${line.separator}## License${line.separator}${line.separator}Copyright © 2012 FIXME${line.separator}${line.separator}Distributed under the MIT License.${line.separator}"/>
+    <tstamp>
+      <format property="this.year" pattern="yyyy"/>
+    </tstamp>
+    <echo file="${readme.file}" message="# ${ant.project.name}${line.separator}${line.separator}A Java library designed to ... well, that part is up to you.${line.separator}${line.separator}## Usage${line.separator}${line.separator}FIXME${line.separator}${line.separator}## License${line.separator}${line.separator}Copyright © ${this.year} FIXME${line.separator}${line.separator}Distributed under the [MIT License](http://opensource.org/licenses/MIT).${line.separator}"/>
   </target>
 
 <!-- targets -->
@@ -34,8 +40,8 @@
     <mkdir dir="${src.dir}${file.separator}${ant.project.name}"/>
     <mkdir dir="${test.dir}${file.separator}${ant.project.name}"/>
     <mkdir dir="${resources.dir}"/>
-    <available file=".gitignore" property="gitignore.exists"/>
-    <available file="README.md" property="readme.exists"/>
+    <available file="${gitignore.file}" property="gitignore.exists"/>
+    <available file="${readme.file}" property="readme.exists"/>
     <antcall target="create-gitignore"></antcall>
     <antcall target="create-readme"></antcall>
     <echo level="info" message="Done."/>
@@ -105,6 +111,5 @@
     </javadoc>
     <echo level="info" message="Done."/>
   </target>
-
 
 </project>
