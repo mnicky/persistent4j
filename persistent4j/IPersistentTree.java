@@ -1,6 +1,6 @@
-package persistentDataStructures;
+package persistent4j;
 
-/** Interface of persistent unbalanced binary search tree. */
+/** Interface of persistent binary search tree. */
 interface IPersistentTree {
 
     //**************** GETTERS *********************************************//

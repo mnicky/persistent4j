@@ -1,4 +1,4 @@
-package persistentDataStructures;
+package persistent4j;
 
 import java.util.Comparator;
 
