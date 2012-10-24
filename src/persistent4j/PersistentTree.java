@@ -288,6 +288,13 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
         }
     }
 
+    /** Returns string representation of elements in this tree. */
+    public String print() {
+        return (L == null ? "" : ((PersistentTree<T>)L).print() + " ") +
+            (VAL == null ? "" : VAL) +
+            (R == null ? "" : " " + ((PersistentTree<T>)R).print());
+    }
+
     //**************** COMMON PUBLIC METHODS *******************************//
 
     @Override
