@@ -44,7 +44,6 @@
     <available file="${readme.file}" property="readme.exists"/>
     <antcall target="create-gitignore"></antcall>
     <antcall target="create-readme"></antcall>
-    <echo level="info" message="Done."/>
   </target>
 
   <target name="clean" description="Delete all generated files">
@@ -53,7 +52,6 @@
       <fileset dir="${build.dir}"/>
       <fileset dir="${javadoc.dir}"/>
     </delete>
-    <echo level="info" message="Done."/>
   </target>
 
   <target name="compile" description="Compile the project">
@@ -63,25 +61,22 @@
       <fileset dir="${resources.dir}"/>
     </copy>
     <javac fork="true" srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
-    <echo level="info" message="Done."/>
   </target>
 
   <target name="compile-tests" description="Compile the project tests">
     <echo level="info" message="Compiling tests to ${basedir}${file.separator}${classes.dir}..."/>
     <mkdir dir="${classes.dir}"/>
     <javac fork="true" debug="true" srcdir="${test.dir}" destdir="${classes.dir}" includeantruntime="false"/>
-    <echo level="info" message="Done."/>
   </target>
 
   <target name="test" depends="clean, compile, compile-tests" description="Run the tests">
-    <echo level="info" message="Running tests:"></echo>
+    <echo level="info" message="Starting tests..."></echo>
     <apply force="true" relative="true" failonerror="true" type="file" addsourcefile="false" executable="java" dir="${classes.dir}" >
       <arg value="-ea"/>
       <targetfile/>
       <fileset dir="${classes.dir}" includes="**/*_Test.class"/>
       <packagemapper handledirsep="true" from="*.class" to="*"/>
     </apply>
-    <echo level="info" message="Done."></echo>
   </target>
 
   <target name="jar" depends="clean, compile" description="Generate the JAR">
@@ -94,7 +89,6 @@
         <attribute name="Implementation-Version" value="${project.version}"/>
       </manifest>
     </jar>
-    <echo level="info" message="Done."/>
   </target>
 
   <target name="javadoc" description="Generate Javadoc documentation">
@@ -109,7 +103,6 @@
       </packageset>
       <link href="${javadoc.j2seapi}"/>
     </javadoc>
-    <echo level="info" message="Done."/>
   </target>
 
 </project>
