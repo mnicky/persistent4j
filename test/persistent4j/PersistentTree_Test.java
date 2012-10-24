@@ -237,7 +237,12 @@ public final class PersistentTree_Test {
 
 
 
-            //-------------------- interface compatibility ---------------------//
+            //-------------------- genericity------------- ---------------------//
+
+            //String s = new PersistentTree<String>().add("s").get("s");
+
+
+            //-------------------- supertype compatibility ---------------------//
 
             // equals & interface
             IPersistentTree t_iface_1 = new PersistentTree().add(10);

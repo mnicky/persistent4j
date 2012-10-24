@@ -138,23 +138,7 @@ public final class PersistentTree implements IPersistentTree {
     public boolean contains(Object value) {
         if (value == null) throw new NullPointerException("PersistentTree.contains(): argument 'value' is null.");
 
-        if (VAL == null)
-            return false;
-
-        if (cmp(value, VAL) == 0)
-            return true;
-
-        if (cmp(value, VAL) < 0) {
-            if (L == null)
-                return false;
-            return L.contains(value);
-        }
-
-        else {
-            if (R == null)
-                return false;
-            return R.contains(value);
-        }
+        return get(value) != null;
     }
 
     /** Returns 'value' from this PersistentTree or null if not contained.
