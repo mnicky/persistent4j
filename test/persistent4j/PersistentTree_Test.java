@@ -1,7 +1,5 @@
 package persistent4j;
 
-import persistent4j.PersistentTree;
-
 public final class PersistentTree_Test {
 
     public static void main(String args[]) {
@@ -11,7 +9,7 @@ public final class PersistentTree_Test {
         assert assertions_enabled = true;
         if (assertions_enabled) {
 
-            System.out.println("Running PersistentTreeTest tests...");
+            System.out.println("Running PersistentTree tests...");
 
 
             //-------------------- isEmpty() -----------------------------------//
