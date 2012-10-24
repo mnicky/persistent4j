@@ -6,13 +6,13 @@ interface IPersistentTree<T> {
     //**************** GETTERS *********************************************//
 
     /** Returns the left child of this node. */
-    public IPersistentTree left();
+    public IPersistentTree<T> left();
 
     /** Returns the value stored in this node. */
     public T value();
 
     /** Returns the right child of this node. */
-    public IPersistentTree right();
+    public IPersistentTree<T> right();
 
     /** Returns the number of non-empty nodes in this subtree. */
     public long size();
@@ -29,12 +29,12 @@ interface IPersistentTree<T> {
     public T get(T value);
 
     /** Returns this tree with 'value' added (if not already present). */
-    public IPersistentTree add(T value);
+    public IPersistentTree<T> add(T value);
 
     /** Returns this tree with 'value' removed. */
-    public IPersistentTree del(T value);
+    public IPersistentTree<T> del(T value);
 
     /** Returns this tree with 'oldValue' replaced by 'newValue'. */
-    public IPersistentTree set(T oldValue, T newValue);
+    public IPersistentTree<T> set(T oldValue, T newValue);
 
 }
