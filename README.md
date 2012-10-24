@@ -27,3 +27,5 @@ Distributed under the [MIT License](http://opensource.org/licenses/MIT).
 * [Understanding Clojure’s PersistentHashMap II](http://blog.higher-order.net/2010/08/16/assoc-and-clojures-persistenthashmap-part-ii)
 
 * [Understanding Clojure’s PersistentVector implementation](http://blog.higher-order.net/2009/02/01/understanding-clojures-persistentvector-implementation)
+
+* [Philip Potter - Persistent Data Structures in Clojure](http://skillsmatter.com/podcast/home/persistent-data-structures-in-clojure)
