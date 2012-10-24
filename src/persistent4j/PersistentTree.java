@@ -3,7 +3,7 @@ package persistent4j;
 import persistent4j.IPersistentTree;
 import java.util.Comparator;
 
-/** Persistent implementation of unbalanced binary search tree. */
+/** Unbalanced implementation of persistent binary search tree. */
 public final class PersistentTree<T> implements IPersistentTree<T> {
 
     //**************** FIELDS **********************************************//
@@ -115,6 +115,7 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
         SIZE = 0;
     }
 
+    //TODO: <? super T>
     /** Returns empty PersistentTree with specified comparator. */
     public PersistentTree(Comparator<T> comparator) {
         L = null;
@@ -291,9 +292,9 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
 
     @Override
     public String toString() {
-        return "(" + (L == null ? "" : L.toString() + " ") +
-            (VAL == null ? "" : VAL.toString()) +
-            (R == null ? "" : " " + R.toString()) + ")";
+        return "(" + (L == null ? "" : L + " ") +
+            (VAL == null ? "" : VAL) +
+            (R == null ? "" : " " + R) + ")";
     }
 
     @Override
@@ -315,7 +316,7 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
         if (!(obj instanceof PersistentTree))
             return false;
 
-        PersistentTree<T> other = (PersistentTree<T>) obj;
+        PersistentTree other = (PersistentTree) obj;
 
         if (this.VAL == null) {
             if (other.VAL != null)
