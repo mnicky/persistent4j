@@ -55,7 +55,6 @@
   </target>
 
   <target name="compile" description="Compile the project">
-    <echo level="info" message="Compiling classes to ${basedir}${file.separator}${classes.dir}..."/>
     <mkdir dir="${classes.dir}"/>
     <copy failonerror="false" todir="${classes.dir}" includeemptydirs="true">
       <fileset dir="${resources.dir}"/>
@@ -64,13 +63,12 @@
   </target>
 
   <target name="compile-tests" description="Compile the project tests">
-    <echo level="info" message="Compiling tests to ${basedir}${file.separator}${classes.dir}..."/>
     <mkdir dir="${classes.dir}"/>
     <javac fork="true" debug="true" srcdir="${test.dir}" destdir="${classes.dir}" includeantruntime="false"/>
   </target>
 
   <target name="test" depends="clean, compile, compile-tests" description="Run the tests">
-    <echo level="info" message="Starting tests..."></echo>
+    <echo level="info" message="Starting tests:"></echo>
     <apply force="true" relative="true" failonerror="true" type="file" addsourcefile="false" executable="java" dir="${classes.dir}" >
       <arg value="-ea"/>
       <targetfile/>
@@ -80,7 +78,6 @@
   </target>
 
   <target name="jar" depends="clean, compile" description="Generate the JAR">
-    <echo level="info" message="JAR file ${basedir}${file.separator}${project.jar} built successfully."/>
     <delete file="${project.jar}" quiet="true"/>
     <jar destfile="${project.jar}">
       <fileset dir="${classes.dir}"/>
@@ -92,7 +89,6 @@
   </target>
 
   <target name="javadoc" description="Generate Javadoc documentation">
-    <echo level="info" message="Generating javadoc in ${basedir}${file.separator}${javadoc.dir}..."/>
     <delete includeemptydirs="true" quiet="true">
       <fileset dir="${javadoc.dir}"/>
     </delete>
