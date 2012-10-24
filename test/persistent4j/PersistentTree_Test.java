@@ -13,6 +13,7 @@ public final class PersistentTree_Test {
 
             System.out.println("Running PersistentTreeTest tests...");
 
+
             //-------------------- isEmpty() -----------------------------------//
 
             // empty tree
@@ -236,11 +237,15 @@ public final class PersistentTree_Test {
             assert new PersistentTree().add(5).add(7).add(12).set(12,99).hashCode() == new PersistentTree().add(5).add(7).add(12).set(12,99).hashCode();
 
 
+            //-------------------- genericity-----------------------------------//
 
-            //-------------------- genericity------------- ---------------------//
+            // Integer & int
+            int num_gen_1 = new PersistentTree<Integer>().add(8).add(6).set(6,9).del(8).get(9);
+            assert num_gen_1 == 9;
 
-            //String s = new PersistentTree<String>().add("s").get("s");
-
+            // String
+            String str_gen_1 = new PersistentTree<String>().add("s").add("t").set("t","x").del("s").get("x");
+            assert str_gen_1 == "x";
 
             //-------------------- supertype compatibility ---------------------//
 

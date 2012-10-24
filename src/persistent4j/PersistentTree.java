@@ -4,18 +4,18 @@ import persistent4j.IPersistentTree;
 import java.util.Comparator;
 
 /** Persistent implementation of unbalanced binary search tree. */
-public final class PersistentTree implements IPersistentTree {
+public final class PersistentTree<T> implements IPersistentTree<T> {
 
     //**************** FIELDS **********************************************//
 
     /** Left child of this node. */
-    private final PersistentTree L;
+    private final PersistentTree<T> L;
 
     /** Value stored in this node. */
-    private final Object VAL;
+    private final T VAL;
 
     /** Right child of this node. */
-    private final PersistentTree R;
+    private final PersistentTree<T> R;
 
     /** Comparator used for this node. */
     private final Comparator COMP;
@@ -30,7 +30,7 @@ public final class PersistentTree implements IPersistentTree {
     //**************** GETTERS *********************************************//
 
     /** Returns the left child of this node. */
-    public PersistentTree left() {
+    public PersistentTree<T> left() {
         return L;
     }
 
@@ -40,12 +40,12 @@ public final class PersistentTree implements IPersistentTree {
      *  Although this value may be of a mutable type, it should NEVER be
      *  modified. Should you need to modify it, use its deep copy instead.
      */
-    public Object value() {
+    public T value() {
         return VAL;
     }
 
     /** Returns the right child of this node. */
-    public PersistentTree right() {
+    public PersistentTree<T> right() {
         return R;
     }
 
@@ -60,7 +60,7 @@ public final class PersistentTree implements IPersistentTree {
     //**************** PRIVATE CONSTRUCTORS & METHODS **********************//
 
     /** Constructor for all the fields. */
-    private PersistentTree(PersistentTree left, Object value, PersistentTree right, Comparator comparator, long size) {
+    private PersistentTree(PersistentTree<T> left, T value, PersistentTree<T> right, Comparator comparator, long size) {
         L = left;
         VAL = value;
         R = right;
@@ -69,7 +69,7 @@ public final class PersistentTree implements IPersistentTree {
     }
 
     /** Generic compare for VAL fields of the nodes. */
-    private int cmp(Object o1, Object o2) {
+    private int cmp(T o1, T o2) {
         // use Comparator
         if (COMP != null)
             return COMP.compare(o1, o2);
@@ -87,11 +87,11 @@ public final class PersistentTree implements IPersistentTree {
     }
 
     /** Returns VAL of successor of this node or null if it doesn't have a successor. */
-    private Object find_succ_val() {
+    private T find_succ_val() {
         if (R == null)
             return null;
 
-        PersistentTree tmp = R;
+        PersistentTree<T> tmp = R;
         while (tmp.L != null)
             tmp = tmp.L;
         return tmp.VAL;
@@ -135,7 +135,7 @@ public final class PersistentTree implements IPersistentTree {
      *
      *  @throws NullPointerException If 'value' is null.
      */
-    public boolean contains(Object value) {
+    public boolean contains(T value) {
         if (value == null) throw new NullPointerException("PersistentTree.contains(): argument 'value' is null.");
 
         return get(value) != null;
@@ -145,7 +145,7 @@ public final class PersistentTree implements IPersistentTree {
      *
      *  @throws NullPointerException If 'value' is null.
      */
-    public Object get(Object value) {
+    public T get(T value) {
         if (value == null) throw new NullPointerException("PersistentTree.contains(): argument 'value' is null.");
 
         if (VAL == null)
@@ -176,27 +176,27 @@ public final class PersistentTree implements IPersistentTree {
      *
      *  @throws NullPointerException If 'value' is null.
      */
-    public PersistentTree add(Object value) {
+    public PersistentTree<T> add(T value) {
         if (value == null) throw new NullPointerException("PersistentTree.add(): argument 'value' is null.");
 
         if (VAL == null)
-            return new PersistentTree(null, value, null, COMP, 1);
+            return new PersistentTree<T>(null, value, null, COMP, 1);
 
         if (cmp(value, VAL) == 0)
             return this;
 
         if (cmp(value, VAL) < 0) {
-            PersistentTree tmp_L = L;
+            PersistentTree<T> tmp_L = L;
             if (tmp_L == null)
-                tmp_L = new PersistentTree(COMP);
-            return new PersistentTree(tmp_L.add(value), VAL, R, COMP, -1);
+                tmp_L = new PersistentTree<T>(COMP);
+            return new PersistentTree<T>(tmp_L.add(value), VAL, R, COMP, -1);
         }
 
         else {
-            PersistentTree tmp_R = R;
+            PersistentTree<T> tmp_R = R;
             if (tmp_R == null)
-                tmp_R = new PersistentTree(COMP);
-            return new PersistentTree(L, VAL, tmp_R.add(value), COMP, -1);
+                tmp_R = new PersistentTree<T>(COMP);
+            return new PersistentTree<T>(L, VAL, tmp_R.add(value), COMP, -1);
         }
     }
 
@@ -204,7 +204,7 @@ public final class PersistentTree implements IPersistentTree {
      *
      *  @throws NullPointerException If 'value' is null.
      */
-    public PersistentTree del(Object value) {
+    public PersistentTree<T> del(T value) {
         if (value == null) throw new NullPointerException("PersistentTree.del(): argument 'value' is null.");
         // call the helper method
         return del(value, true);
@@ -214,7 +214,7 @@ public final class PersistentTree implements IPersistentTree {
      *
      *  @throws NullPointerException If 'value' is null.
      */
-    private PersistentTree del(Object value, boolean thisIsTreeRoot) {
+    private PersistentTree<T> del(T value, boolean thisIsTreeRoot) {
         if (value == null) throw new NullPointerException("PersistentTree.del(): argument 'value' is null.");
 
         if (VAL == null)
@@ -224,7 +224,7 @@ public final class PersistentTree implements IPersistentTree {
             if (L == null && R == null)
                 // if at root, return the new empty tree, else "delete" the node
                 if (thisIsTreeRoot)
-                    return new PersistentTree(COMP);
+                    return new PersistentTree<T>(COMP);
                 else
                     return null;
             if (L != null && R == null)
@@ -232,21 +232,21 @@ public final class PersistentTree implements IPersistentTree {
             if (L == null && R != null)
                 return R;
             else {
-                Object succ = this.find_succ_val();
-                return new PersistentTree(L, succ, R.del(succ, false), COMP, -1);
+                T succ = this.find_succ_val();
+                return new PersistentTree<T>(L, succ, R.del(succ, false), COMP, -1);
             }
         }
 
         if (cmp(value, VAL) < 0) {
             if (L == null)
                 return this;
-            return new PersistentTree(L.del(value, false), VAL, R, COMP, -1);
+            return new PersistentTree<T>(L.del(value, false), VAL, R, COMP, -1);
         }
 
         else {
             if (R == null)
                 return this;
-            return new PersistentTree(L, VAL, R.del(value, false), COMP, -1);
+            return new PersistentTree<T>(L, VAL, R.del(value, false), COMP, -1);
         }
     }
 
@@ -264,7 +264,7 @@ public final class PersistentTree implements IPersistentTree {
      *
      *  @throws NullPointerException If 'oldValue' or 'newValue' is null.
      */
-    public PersistentTree set(Object oldValue, Object newValue) {
+    public PersistentTree<T> set(T oldValue, T newValue) {
         if (oldValue == null) throw new NullPointerException("PersistentTree.set(): argument 'oldValue' is null.");
         if (newValue == null) throw new NullPointerException("PersistentTree.set(): argument 'newValue' is null.");
 
@@ -272,18 +272,18 @@ public final class PersistentTree implements IPersistentTree {
             return this;
 
         if (cmp(oldValue, VAL) == 0)
-            return new PersistentTree(L, newValue, R, COMP, SIZE);
+            return new PersistentTree<T>(L, newValue, R, COMP, SIZE);
 
         if (cmp(oldValue, VAL) < 0) {
             if (L == null)
                 return this;
-            return new PersistentTree(L.set(oldValue, newValue), VAL, R, COMP, SIZE);
+            return new PersistentTree<T>(L.set(oldValue, newValue), VAL, R, COMP, SIZE);
         }
 
         else {
             if (R == null)
                 return this;
-            return new PersistentTree(L, VAL, R.set(oldValue, newValue), COMP, SIZE);
+            return new PersistentTree<T>(L, VAL, R.set(oldValue, newValue), COMP, SIZE);
         }
     }
 
@@ -315,7 +315,7 @@ public final class PersistentTree implements IPersistentTree {
         if (!(obj instanceof PersistentTree))
             return false;
 
-        PersistentTree other = (PersistentTree) obj;
+        PersistentTree<T> other = (PersistentTree<T>) obj;
 
         if (this.VAL == null) {
             if (other.VAL != null)
