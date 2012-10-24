@@ -156,6 +156,74 @@ public final class PersistentTree_Test {
             assert new PersistentTree().add(5).add(7).add(12).add(10).add(3).set(5,6).set(12,99)
                     .size() == 5;
 
+
+            //-------------------- equals() ------------------------------------//
+
+            // empty tree
+            assert new PersistentTree().equals(new PersistentTree());
+
+            // after add() called one time
+            assert new PersistentTree().add(5).equals(new PersistentTree().add(5));
+
+            // after add() called more times
+            assert new PersistentTree().add(5).add(7).add(12).equals(new PersistentTree().add(5).add(7).add(12));
+
+            // after del() at the beginning
+            assert new PersistentTree().add(5).add(7).add(12).del(5).equals(new PersistentTree().add(5).add(7).add(12).del(5));
+
+            // after del() in the middle
+            assert new PersistentTree().add(5).add(7).add(12).del(7).equals(new PersistentTree().add(5).add(7).add(12).del(7));
+
+            // after del() at the end
+            assert new PersistentTree().add(5).add(7).add(12).del(12).equals(new PersistentTree().add(5).add(7).add(12).del(12));
+
+            // after set() at the beginning
+            assert new PersistentTree().add(5).add(7).add(12).set(5,99).equals(new PersistentTree().add(5).add(7).add(12).set(5,99));
+
+            // after set() in the middle
+            assert new PersistentTree().add(5).add(7).add(12).set(7,99).equals(new PersistentTree().add(5).add(7).add(12).set(7,99));
+
+            // after set() at the end
+            assert new PersistentTree().add(5).add(7).add(12).set(12,99).equals(new PersistentTree().add(5).add(7).add(12).set(12,99));
+
+
+            //-------------------- hashCode() ----------------------------------//
+
+            // empty tree
+            assert new PersistentTree().hashCode() == new PersistentTree().hashCode();
+
+            // after add() called one time
+            assert new PersistentTree().add(5).hashCode() == new PersistentTree().add(5).hashCode();
+
+            // after add() called more times
+            assert new PersistentTree().add(5).add(7).add(12).hashCode() == new PersistentTree().add(5).add(7).add(12).hashCode();
+
+            // after del() at the beginning
+            assert new PersistentTree().add(5).add(7).add(12).del(5).hashCode() == new PersistentTree().add(5).add(7).add(12).del(5).hashCode();
+
+            // after del() in the middle
+            assert new PersistentTree().add(5).add(7).add(12).del(7).hashCode() == new PersistentTree().add(5).add(7).add(12).del(7).hashCode();
+
+            // after del() at the end
+            assert new PersistentTree().add(5).add(7).add(12).del(12).hashCode() == new PersistentTree().add(5).add(7).add(12).del(12).hashCode();
+
+            // after set() at the beginning
+            assert new PersistentTree().add(5).add(7).add(12).set(5,99).hashCode() == new PersistentTree().add(5).add(7).add(12).set(5,99).hashCode();
+
+            // after set() in the middle
+            assert new PersistentTree().add(5).add(7).add(12).set(7,99).hashCode() == new PersistentTree().add(5).add(7).add(12).set(7,99).hashCode();
+
+            // after set() at the end
+            assert new PersistentTree().add(5).add(7).add(12).set(12,99).hashCode() == new PersistentTree().add(5).add(7).add(12).set(12,99).hashCode();
+
+
+
+            //-------------------- interface compatibility ---------------------//
+
+            // equals & interface
+            IPersistentTree t_sub_1 = new PersistentTree().add(10);
+            assert t_sub_1.equals(new PersistentTree().add(10));
+
         }
 
     }
