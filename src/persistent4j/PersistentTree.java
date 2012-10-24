@@ -18,7 +18,7 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
     private final PersistentTree<T> R;
 
     /** Comparator used for this node. */
-    private final Comparator COMP;
+    private final Comparator<T> COMP;
 
     /** Number of non-empty nodes in this subtree.
      *  <br><br>
@@ -60,7 +60,7 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
     //**************** PRIVATE CONSTRUCTORS & METHODS **********************//
 
     /** Constructor for all the fields. */
-    private PersistentTree(PersistentTree<T> left, T value, PersistentTree<T> right, Comparator comparator, long size) {
+    private PersistentTree(PersistentTree<T> left, T value, PersistentTree<T> right, Comparator<T> comparator, long size) {
         L = left;
         VAL = value;
         R = right;
@@ -76,7 +76,7 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
 
         // use Comparable
         if (o1 instanceof Comparable && o2 instanceof Comparable && o1.getClass() == o2.getClass())
-            return ((Comparable) o1).compareTo(o2);
+            return ((Comparable<T>) o1).compareTo(o2);
 
         // generic compare
         else {
@@ -116,7 +116,7 @@ public final class PersistentTree<T> implements IPersistentTree<T> {
     }
 
     /** Returns empty PersistentTree with specified comparator. */
-    public PersistentTree(Comparator comparator) {
+    public PersistentTree(Comparator<T> comparator) {
         L = null;
         VAL = null;
         R = null;
