@@ -157,6 +157,32 @@ public final class PersistentTree implements IPersistentTree {
         }
     }
 
+    /** Returns 'value' from this PersistentTree or null if not contained.
+     *
+     *  @throws NullPointerException If 'value' is null.
+     */
+    public Object get(Object value) {
+        if (value == null) throw new NullPointerException("PersistentTree.contains(): argument 'value' is null.");
+
+        if (VAL == null)
+            return null;
+
+        if (cmp(value, VAL) == 0)
+            return VAL;
+
+        if (cmp(value, VAL) < 0) {
+            if (L == null)
+                return null;
+            return L.get(value);
+        }
+
+        else {
+            if (R == null)
+                return null;
+            return R.get(value);
+        }
+    }
+
     /** Returns this PersistentTree with 'value' added (if not already present).
      *  <br><br>
      *
@@ -200,7 +226,10 @@ public final class PersistentTree implements IPersistentTree {
         return del(value, true);
     }
 
-    /** Returns this PersistentTree with 'value' removed, differentiating between tree root and other nodes. */
+    /** Returns this PersistentTree with 'value' removed, differentiating between tree root and other nodes.
+     *
+     *  @throws NullPointerException If 'value' is null.
+     */
     private PersistentTree del(Object value, boolean thisIsTreeRoot) {
         if (value == null) throw new NullPointerException("PersistentTree.del(): argument 'value' is null.");
 

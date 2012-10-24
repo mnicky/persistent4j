@@ -27,6 +27,9 @@ interface IPersistentTree {
     /** Returns whether this tree contains 'value'. */
     public boolean contains(Object value);
 
+    /** Returns 'value' from this tree or null if not contained. */
+    public Object get(Object value);
+
     /** Returns this tree with 'value' added (if not already present). */
     public IPersistentTree add(Object value);
 

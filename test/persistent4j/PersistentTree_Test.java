@@ -49,6 +49,25 @@ public final class PersistentTree_Test {
                     assert t_contains_1.toString().equals("(((2) 4) 5 ((6) 7 (16)))");
 
 
+            //-------------------- get() ----------------------------------//
+
+            // empty tree
+            assert new PersistentTree().get(0) == null;
+
+            // non-empty tree
+            assert (Integer) new PersistentTree().add(0).get(0) == 0;
+            assert (Integer) new PersistentTree().add(10).add(5).add(15).add(8).get(8) == 8;
+
+            // nonexistent value
+            assert new PersistentTree().add(10).add(5).add(15).add(8).get(20) == null;
+
+            // test of presistency preserving
+            PersistentTree t_get_1 = new PersistentTree().add(5).add(4).add(7).add(6).add(2).add(16);
+                    t_get_1.get(16);
+                    t_get_1.get(100);
+                    assert t_get_1.toString().equals("(((2) 4) 5 ((6) 7 (16)))");
+
+
             //-------------------- add() ---------------------------------------//
 
             // adding elements
@@ -221,8 +240,8 @@ public final class PersistentTree_Test {
             //-------------------- interface compatibility ---------------------//
 
             // equals & interface
-            IPersistentTree t_sub_1 = new PersistentTree().add(10);
-            assert t_sub_1.equals(new PersistentTree().add(10));
+            IPersistentTree t_iface_1 = new PersistentTree().add(10);
+            assert t_iface_1.equals(new PersistentTree().add(10));
 
         }
 
